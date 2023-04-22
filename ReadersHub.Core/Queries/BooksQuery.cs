@@ -12,14 +12,19 @@ namespace ReadersHub.Core.Queries
             _books = books;
         }
 
-        public BookList GetBooks()
+        public async Task<BookList> GetBooks()
         {
-            return _books.GetBooks();
+            return await _books.GetBooks();
         }
 
-        public void AddBook(Book book)
+        public async Task AddBook(Book book)
         {
-            _books.AddBook(book);
+            await _books.AddBook(book);
+        }
+
+        public async Task DeleteBook(int id)
+        {
+            await _books.DeleteBook(id);
         }
     }
 }

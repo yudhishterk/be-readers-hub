@@ -16,8 +16,8 @@ builder.Services
     .AddGraphQLServer()
     .AddQueryType<BooksQuery>();
 
-builder.Services.AddTransient<BooksData>();
-builder.Services.AddTransient<BooksQuery>();
+builder.Services.AddSingleton<BooksData>();
+builder.Services.AddScoped<BooksQuery>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -32,10 +32,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapPost("/book", (Book book, BooksQuery handler) =>
+app.MapPost("/book", async (Book book, BooksQuery handler) =>
 {
-    handler.AddBook(book);
+    await handler.AddBook(book);
     return Results.Created("/book", null);
+});
+
+app.MapDelete("/book/{id}", async (int id, BooksQuery handler) =>
+{
+    await handler.DeleteBook(id);
+    return Results.Ok();
 });
 
 app.Run();

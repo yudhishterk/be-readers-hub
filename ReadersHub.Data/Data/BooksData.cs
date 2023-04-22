@@ -1,6 +1,7 @@
 ﻿using ReadersHub.Contracts.Books;
 using AutoMapper;
 using ReadersHub.Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ReadersHub.Data.Data
 {
@@ -15,18 +16,25 @@ namespace ReadersHub.Data.Data
             _mapper = Helper.AutoMapper.Instance;
         }
 
-        public BookList GetBooks()
+        public async Task<BookList> GetBooks()
         {
-            var books = _context.Books.AsParallel().Select(book => _mapper.Map<Book>(book));
-
+            var booksDto = await _context.Books.ToArrayAsync();
+            var books = Array.ConvertAll(booksDto, dto => _mapper.Map<Book>(dto));
             return new BookList(books);
         }
 
-        public void AddBook(Book book)
+        public async Task AddBook(Book book)
         {
             var bookDto = _mapper.Map<BookDto>(book);
-            _context.Books.Add(bookDto);
-            _context.SaveChanges();
+
+            await _context.Books.AddAsync(bookDto);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteBook(int id)
+        {
+            _context.Remove(new BookDto { Id = id });
+            await _context.SaveChangesAsync();
         }
     }
 }
