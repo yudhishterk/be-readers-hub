@@ -4,6 +4,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+	<GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,6 +12,13 @@
     <PackageReference Include="HotChocolate.Data" Version="13.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.4" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ReadersHub.Contracts\ReadersHub.Contracts.csproj" />
+    <ProjectReference Include="..\ReadersHub.Core\ReadersHub.Core.csproj" />
+    <ProjectReference Include="..\ReadersHub.Data\ReadersHub.Data.csproj" />
   </ItemGroup>
 
 </Project>
