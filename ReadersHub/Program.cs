@@ -16,7 +16,7 @@ builder.Services
     .AddGraphQLServer()
     .AddQueryType<BooksQuery>();
 
-builder.Services.AddSingleton<BooksData>();
+builder.Services.AddScoped<BooksData>();
 builder.Services.AddScoped<BooksQuery>();
 
 builder.Services.AddEndpointsApiExplorer();
